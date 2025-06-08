@@ -1,36 +1,208 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      #todo-container {
+        max-width: 400px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      input[type="text"] {
+        width: calc(100% - 50px);
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        margin-top: 10px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .delete-btn {
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      .delete-btn:hover {
+        background: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="todo-container">
+      <h1>To-Do List</h1>
+      <input type="text" id="todo-input" placeholder="Add a new task" />
+      <button id="add-btn">Add</button>
+      <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+      // Get references to DOM elements
+      const addButton = document.getElementById("add-btn");
+      const todoInput = document.getElementById("todo-input");
+      const todoList = document.getElementById("todo-list");
+
+      // Function to add a new to-do item
+      function addTodo() {
+        const task = todoInput.value.trim();
+        if (task === "") {
+          alert("Please enter a task!");
+          return;
+        }
+
+        // Create list item
+        const li = document.createElement("li");
+        li.textContent = task;
+
+        // Create delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.onclick = function () {
+          todoList.removeChild(li);
+        };
+
+        // Append button to list item and list item to list
+        li.appendChild(deleteBtn);
+        todoList.appendChild(li);
+
+        // Clear input field
+        todoInput.value = "";
+      }
+
+      // Add event listener to the Add button
+      addButton.addEventListener("click", addTodo);
+
+      // Allow pressing Enter to add a task
+      todoInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          addTodo();
+        }
+      });
+    </script>
+  </body>
+</html> -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="main">
-      <div class="container">
-        <div class="jsturn">
-          <span class="turn"></span>
-        </div>
-        <div class="btn">
-          <button class=".btn1" onclick="playGame('Rock')">Rock</button>
-          <button class=".btn2" onclick="playGame('Paper')">Paper</button>
-          <button class=".btn3" onclick="playGame('Scissor')">Scissor</button>
-        </div>
-
-        <div class="status">
-          <button class="jsStatus">Result:</button>
-        </div>
-
-        <div class="score">
-          <button class="jsScore"></button>
-        </div>
-
-        <div class="rst">
-          <button onclick="resetFunc()">Reset Button</button>
-        </div>
-      </div>
+    <div id="myDIV" class="header">
+      <h2>My To Do List</h2>
+      <input type="text" id="myInput" placeholder="Title..." />
+      <span onclick="newElement()" class="addBtn">Add</span>
     </div>
-    <script src="game.js"></script>
+
+    <ul id="myUL">
+      <!-- <li>Hit the gym</li>
+      <li class="checked">Pay bills</li>
+      <li>Meet George</li>
+      <li>Buy eggs</li>
+      <li>Read a book</li>
+      <li>Organize office</li> -->
+    </ul>
+
+    <script>
+      // Create a "close" button and append it to each list item
+      var myNodelist = document.getElementsByTagName("LI");
+      var i;
+      for (i = 0; i < myNodelist.length; i++) {
+        var span = document.createElement("SPAN");
+        var txt = document.createTextNode("\u00D7");
+        span.className = "close";
+        span.appendChild(txt);
+        myNodelist[i].appendChild(span);
+      }
+
+      // Click on a close button to hide the current list item
+      var close = document.getElementsByClassName("close");
+      var i;
+      for (i = 0; i < close.length; i++) {
+        close[i].onclick = function () {
+          var div = this.parentElement;
+          div.style.display = "none";
+        };
+      }
+
+      // Add a "checked" symbol when clicking on a list item
+      var list = document.querySelector("ul");
+      list.addEventListener(
+        "click",
+        function (ev) {
+          if (ev.target.tagName === "LI") {
+            ev.target.classList.toggle("checked");
+          }
+        },
+        false
+      );
+
+      // Create a new list item when clicking on the "Add" button
+      function newElement() {
+        var li = document.createElement("li");
+        var inputValue = document.getElementById("myInput").value;
+        var t = document.createTextNode(inputValue);
+        li.appendChild(t);
+        if (inputValue === "") {
+          alert("You must write something!");
+        } else {
+          document.getElementById("myUL").appendChild(li);
+        }
+        document.getElementById("myInput").value = "";
+
+        var span = document.createElement("SPAN");
+        var txt = document.createTextNode("\u00D7");
+        span.className = "close";
+        span.appendChild(txt);
+        li.appendChild(span);
+
+        for (i = 0; i < close.length; i++) {
+          close[i].onclick = function () {
+            var div = this.parentElement;
+            div.style.display = "none";
+          };
+        }
+      }
+    </script>
   </body>
 </html>
